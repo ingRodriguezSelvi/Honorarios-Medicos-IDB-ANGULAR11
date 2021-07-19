@@ -1,0 +1,81 @@
+
+
+<mat-dialog-content class="mat-typography">
+  <h2 mat-dialog-title style="text-align: center;">Editar datos del medico</h2>
+  <div class="container">
+    <div class="row g-0">
+      <div class="col-12">
+        <mat-card class="usercard">
+          <div class="row g-0">
+            <form [formGroup]="updateMed" *ngIf="flag">
+              <mat-form-field style="width:100% ; " hidden>
+                <input type="text" matInput placeholder="id" [(ngModel)]='_medico.medico.id' value={{_medico.medico.id}}  formControlName="id">
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; "  >
+                <input [disabled]='true' required type="text" matInput placeholder="Usuario"formControlName="extId" [(ngModel)]='_medico.medico.extId' value={{_medico.medico.extId}} >
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Nombres"formControlName="nombres" required [(ngModel)]='_medico.medico.nombres' value={{_medico.medico.nombres}} >
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Apellidos"formControlName="apellidos" required [(ngModel)]='_medico.medico.apellidos' value={{_medico.medico.apellidos}} >
+              </mat-form-field>
+              <mat-form-field hidden>
+                <input type="text" matInput placeholder="full_Name"formControlName="full_Name"  [(ngModel)]='_medico.medico.full_Name' value={{_medico.medico.full_Name}} >
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Rif"formControlName="rif" required [(ngModel)]='_medico.medico.rif' value={{_medico.medico.rif}}>
+              </mat-form-field>
+              <mat-form-field style="width: 90%;margin: 2%;">
+                <textarea name="" id="" cols="30" rows="5" matInput required placeholder="Direccion"formControlName="direccion" [(ngModel)]='_medico.medico.direccion'
+                value={{_medico.medico.direccion}}></textarea>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Email"formControlName="email" required [(ngModel)]='_medico.medico.email' value={{_medico.medico.email}}>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Celular"formControlName="celular" required [(ngModel)]='_medico.medico.celular' value={{_medico.medico.celular}}>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <mat-label>{{'Sexo'||'Seleccione un sexo'}}</mat-label>
+                <mat-select formControlName='sexo' [(ngModel)]='_medico.medico.sexo' required value={{_medico.medico.sexo}}>
+                <mat-option value='M'>Hombre</mat-option>
+                <mat-option value='F'>Mujer</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="Zona"formControlName="zona" required [(ngModel)]='_medico.medico.zona' value={{_medico.medico.zona}}>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <input type="text" required matInput placeholder="Ciudad"formControlName="ciudad" [(ngModel)]='_medico.medico.ciudad' value={{_medico.medico.ciudad}}>
+              </mat-form-field>
+              <mat-form-field style="width:40%;margin: 2%; ">
+                <mat-label  >{{this.especialidades[this._medico.medico.especialidad].especialidad||'Seleccione una especialidad'}}</mat-label>
+                <mat-select formControlName="especialidad" required [(ngModel)]='_medico.medico.especialidad' value={{this.especialidades[this._medico.medico.especialidad].especialidad}}  >
+                <mat-option *ngFor="let especialidad of especialidades" value={{especialidad.id-1}} >{{especialidad.especialidad}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field hidden style="width:40%;margin: 2%; ">
+                <input type="text" matInput placeholder="activo"formControlName="activo" [(ngModel)]='_medico.medico.activo' value={{_medico.medico.activo}}>
+              </mat-form-field>
+              <div *ngIf="flag">
+                <form [formGroup]="especiales" >
+                  <mat-checkbox formControlName="contrato"  [checked]='contrato.checked' [(ngModel)]='_medico.contrato' style="padding: 1rem;margin-left: 2%; ">Contrato</mat-checkbox>
+                  <mat-checkbox formControlName="cortesia" [checked]='cortesia.checked' [(ngModel)]='_medico.cortesia' style="padding: 1rem; ">Cortesia</mat-checkbox>
+
+                </form>
+                <mat-checkbox  [checked]='_medico.cortesia' hidden #cortesia style="padding: 1rem; ">Cortesia</mat-checkbox>
+                <mat-checkbox [checked]='_medico.contrato'  hidden #contrato style="padding: 1rem;margin-left: 2%; ">Contrato</mat-checkbox>
+              </div>
+              <br>
+
+              <button mat-button (click)="updateMedi()" mat-dialog-close  style="margin-left: 22%; width: 25%;">Aceptar</button>
+              <button mat-button [mat-dialog-close]="true" cdkFocusInitial style="margin:2%;width: 25%;">Cancelar</button>
+          </form>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

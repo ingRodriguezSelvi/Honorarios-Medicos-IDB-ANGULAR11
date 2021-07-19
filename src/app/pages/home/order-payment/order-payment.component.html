@@ -1,0 +1,229 @@
+<div class="containeru" *ngIf='!data.isMobile'>
+  <div>
+    <mat-button-toggle-group name="sedes" style="font-size: larger;" #toggleSede="matButtonToggleGroup" class="sedes" [disabled]="isLoadding" (click)="tipoSede(toggleSede.value,this.ano,this.mes)" >
+      <mat-button-toggle  class="sedes1 fontToogle" checked value='1' >Clínica IDB Cabudare </mat-button-toggle>
+      <mat-button-toggle  class="sedes1 fontToogle" value="2"  >Clínica IDB Barquisimeto</mat-button-toggle>
+      <mat-button-toggle  class="sedes1 fontToogle" value="3"  >Clínica IMD San Felipe </mat-button-toggle>
+      <mat-button-toggle  class="sedes1 fontToogle" value="4" >Previmédica IDB</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <mat-card class="mat-card-payment">
+    <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: left;font-size: larger;" *ngIf=" data.isErr" >
+      <p style="text-align: center;">{{data.msjErr}}</p>
+      <button mat-raised-button style="width: 40%;margin-left: 30%;margin-right: 30%;" (click)="reload()">Reintentar</button>
+    </div>
+    <div *ngIf="!data.isErr" >
+     <div>
+      <div>
+        <button class="text" [id]="active" #btn1 value="option1" (click)="expression(btn1.value)"><p>Honorarios Cobrados </p></button>
+        <button class="text" [id]='active1' #btn2 value="option2"(click)="expression1(btn2.value)" [hidden]='data.isPrevimedica'><p>Honorarios por Cobrar</p></button>
+      </div>
+    </div>
+    <div >
+         <div *ngIf='isLoadding' class="loadding">
+          <img src="https://idbclinicas.com/wp-content/uploads/2017/09/loader.gif" alt="">
+        </div>
+       <div *ngIf='data.hC && !data.isPrevimedica'>
+        <div *ngIf="!isLoadding">
+          <mat-form-field>
+            <mat-label>{{this.meses[this.mes-1].nombre}}</mat-label>
+            <mat-select ([value])="mes" #fecha (selectionChange)="aplyFilterDate(data.anno,fecha.value,toggleSede.value)">
+              <mat-option *ngFor="let mes of data.MesesView" value={{mes.id}}>{{mes.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 20%;" *ngIf="data.hC && !data.isPrevimedica">
+            <mat-label >Buscar por paciente</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Juan Perez" #input >
+          </mat-form-field>
+          <button mat-raised-button *ngIf="!data.hXC && !data.isPrevimedica"  (click)="viewOrdenes()"><mat-icon style="margin-right: 10px;" >description</mat-icon>Ver Pagos</button>
+          <button mat-raised-button (click)="downloadPDF()" *ngIf="flag"><mat-icon style="margin-right: 10px;">print</mat-icon  >Descargar</button>
+        <div *ngIf="data.hC" id='htmlData'>
+          <div class="row g-0">
+            <div class="col-12">
+              <table mat-table [dataSource]="dataSource" *ngIf="flag && data.sede!=4" >
+                <ng-container matColumnDef="Numero de Factura">
+                  <th mat-header-cell *matHeaderCellDef> Número de Factura </th>
+                  <td mat-cell *matCellDef="let element" style="width: 20%;"> {{element.numero_Fact}} </td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+                <ng-container matColumnDef="Numero de Orden">
+                  <th mat-header-cell *matHeaderCellDef>Pagos</th>
+                  <td mat-cell *matCellDef="let element" style="width: 10%;"><a (click)="openModal(element.numero,element.montoBs,element.montoDol,toggleSede.value,element.fecha)" style="cursor: pointer; color: #013476;"> Ver Pagos </a> </td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+                <ng-container matColumnDef="Paciente">
+                  <th mat-header-cell *matHeaderCellDef class="font-center"> Paciente </th>
+                  <td mat-cell *matCellDef="let element" style="width: 38%;"> {{element.nombre}} </td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+                <ng-container matColumnDef="Fecha de la Factura">
+                  <th mat-header-cell *matHeaderCellDef> Fecha de la Factura </th>
+                  <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.fecha_Fact|date:'dd/MM/YYYY'}} </td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+                <ng-container matColumnDef="Monto en Bs">
+                  <th mat-header-cell *matHeaderCellDef class="alin-regth"> Monto Bs * </th>
+                  <td mat-cell *matCellDef="let element" class="alin-regth monto"style="width: 10%;"> {{element.monto_Bruto_Bs|number:'1.2-2'}} </td>
+                  <td mat-footer-cell *matFooterCellDef style="background: #0077cb; color: #fff; font-weight: 500;height: 10px;">Total Bs *</td>
+                </ng-container>
+                <ng-container matColumnDef="Monto en $">
+                  <th mat-header-cell *matHeaderCellDef class="alin-regth"> Monto USD * </th>
+                  <td mat-cell *matCellDef="let element" class="alin-regth monto"style="width: 12%;"> {{element.monto_Bruto_Dol|number:'1.2'}} </td>
+                  <td mat-footer-cell *matFooterCellDef style="background: #0077cb; color: #fff; font-weight: 500;height: 10px;">Total USD *</td>
+                </ng-container>
+                <ng-container matColumnDef="1">
+                  <td mat-footer-cell *matFooterCellDef >
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="2">
+                  <td mat-footer-cell *matFooterCellDef >
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="3">
+                  <td mat-footer-cell *matFooterCellDef >
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="4">
+                  <td mat-footer-cell *matFooterCellDef >
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="5">
+                  <td mat-footer-cell *matFooterCellDef class="alin-regth monto"style="width: 10%;">{{totalBs|number:'1.2'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="6">
+                  <td mat-footer-cell *matFooterCellDef class="alin-regth monto"style="width: 10%;">{{totalUsd|number:'1.2'}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                <tr mat-footer-row *matFooterRowDef="['1', '2','3','4','5','6']"></tr>
+              </table>
+            </div>
+          </div>
+        </div >
+        <div class="container" *ngIf="!isLoadding">
+          <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: left;font-size: larger;" *ngIf="!flag && !data.isPrevimedica" >
+            <p style="text-align: center;">{{msjx}}
+            </p>
+          </div>
+          <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: left;font-size: medium;" *ngIf="flag && data.sede!=4">
+            <p style="text-align: center;">*Montos después de retenciones administrativas y de Ley. Los montos no incluyen el sustraendo de Ley. Para su preguntas quedamos a la orden en el departamentode pagos. Trabajamos por su bienestar.
+            </p>
+          </div>
+        </div>
+      </div>
+        </div>
+    </div>
+    <div *ngIf="data.hXC">
+      <h1><app-hono-por-pagar [tiposedes]="toggleSede.value"[mes]="mes"[ano]="ano" ></app-hono-por-pagar></h1>
+    </div>
+    <div  *ngIf='data.hA' >
+      <app-hono-agrupados [tiposedes]="toggleSede.value"[mes]="mes"[ano]="ano">
+      </app-hono-agrupados>
+    </div>
+    <div *ngIf='data.isPrevimedica'>
+      <app-previ [mes]='mes'>
+      </app-previ>
+    </div>
+    </div>
+
+  </mat-card>
+    </div>
+
+  <!--VERSION MOVIL-->
+
+  <div class="row" *ngIf="data.isMobile">
+    <div class="col-12">
+        <div class="row">
+          <mat-button-toggle-group #toggleSedeMobile="matButtonToggleGroup" style="width: 100%;"
+          [disabled]="isLoadding" (click)="tipoSede(toggleSedeMobile.value,this.ano,this.mes)">
+            <mat-button-toggle class="col-3 toggle"  checked value='1' >Cabudare</mat-button-toggle>
+            <mat-button-toggle  class="col-3 toggle" value="2"  >Barquisimeto</mat-button-toggle>
+            <mat-button-toggle  class="col-3 toggle" value="3"  >San Felipe</mat-button-toggle>
+            <mat-button-toggle  class="col-3 toggle" value="4" >Previmédica</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+    </div>
+    <div class="col-12">
+      <mat-card>
+        <div *ngIf='isLoadding' class="row ">
+          <div class="col-12"><img src="https://idbclinicas.com/wp-content/uploads/2017/09/loader.gif" alt="250px" width="250px" style="margin-left:20%;"></div>
+        </div>
+        <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: left;font-size: larger;" *ngIf=" data.isErr" >
+          <p style="text-align: center;">{{data.msjErr}}</p>
+          <button mat-raised-button style="width: 40%;margin-left: 30%;margin-right: 30%;" (click)="reload()">Reintentar</button>
+        </div>
+        <div *ngIf='!isLoadding && !data.isErr && !data.isPrevimedica'>
+          <button class="text" style="width: 50%;" [id]="active" #btn1 value="option1" (click)="expression(btn1.value)"><p>Honorarios Cobrados </p></button>
+          <button class="text"  [id]='active1' #btn2 value="option2"(click)="expression1(btn2.value)" [hidden]='data.isPrevimedica'><p>Honorarios por Cobrar</p></button>
+        <div *ngIf="data.hC">
+            <mat-form-field style="width: 100%;">
+            <mat-label>{{this.meses[this.mes-1].nombre}}</mat-label>
+            <mat-select ([value])="mes" #fechaMobile (selectionChange)="aplyFilterDate(data.anno,fechaMobile.value,toggleSedeMobile.value)">
+              <mat-option *ngFor="let mes of data.MesesView" value={{mes.id}}>{{mes.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button *ngIf="!data.hXC && !data.isPrevimedica"  (click)="viewOrdenes()" style="width: 100%;margin: 0;margin-bottom: 1rem;"><mat-icon style="margin-right: 10px;" >description</mat-icon>Ver Pagos</button>
+
+            <table class="table mobiletable" *ngFor="let cobro of ordensPayments" id='htmlData'>
+            <thead>
+              <th>Orden:</th>
+              <th style="width: 50%;">{{cobro.numero}}</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="scop">Número de Factura:</td>
+                <td>{{cobro.numero_Fact}}</td>
+              </tr>
+              <tr>
+                <td class="scop">Pagos:</td>
+                <td><a (click)="openModal(cobro.numero,cobro.montoBs,cobro.montoDol,toggleSedeMobile.value,cobro.fecha)" style="cursor: pointer; color: #013476;"> Ver Pagos </a></td>
+              </tr>
+              <tr>
+                <td class="scop">Paciente:</td>
+                <td>{{cobro.nombre}}</td>
+              </tr>
+              <tr>
+                <td class="scop">Fecha de la Factura:</td>
+                <td>{{cobro.fecha_Fact|date:'dd/MM/YYYY'}}</td>
+              </tr>
+              <tr>
+                <td class="scop">Monto Bs:</td>
+                <td class=" monto">{{cobro.monto_Bruto_Bs|number:'1.2-2'}}</td>
+              </tr>
+              <tr>
+                <td class="scop">Monto USD:</td>
+                <td class=" monto">{{cobro.monto_Bruto_Dol|number:'1.2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container" *ngIf="!isLoadding">
+            <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: left;font-size: larger;" *ngIf="!flag && !data.isPrevimedica" >
+              <p style="text-align: center;">{{msjx}}
+              </p>
+            </div>
+            <div class="alert alert-secondary " style="margin-top: 1.5rem;text-align: justify;font-size: medium; width: 100%;" *ngIf="flag && data.sede!=4">
+              <p style="text-align: justify;">*Montos después de retenciones administrativas y de Ley. Los montos no incluyen el sustraendo de Ley. Para su preguntas quedamos a la orden en el departamentode pagos. Trabajamos por su bienestar.
+              </p>
+            </div>
+          </div>
+          </div>
+
+
+          <div *ngIf="data.hXC">
+            <h1><app-hono-por-pagar [tiposedes]="toggleSedeMobile.value"[mes]="mes"[ano]="ano" ></app-hono-por-pagar></h1>
+          </div>
+          <div  *ngIf='data.hA' >
+            <app-hono-agrupados [tiposedes]="toggleSedeMobile.value"[mes]="mes"[ano]="ano">
+            </app-hono-agrupados>
+          </div>
+
+        </div>
+        <div *ngIf='data.isPrevimedica'>
+            <app-previ [mes]='mes'>
+            </app-previ>
+          </div>
+      </mat-card>
+    </div>
+  </div>

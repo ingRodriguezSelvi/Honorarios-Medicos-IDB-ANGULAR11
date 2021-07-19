@@ -1,0 +1,28 @@
+<mat-toolbar class="color-IDB">
+  <ng-container *ngIf="!isAdmin" class="color-IDB">
+  <img src="https://idbclinicas.com/wp-content/uploads/2017/09/grupo-de-clinicas-diapo.png" alt="80px" width="250px">
+  <span class="spacer"></span>
+  <div>
+    <a mat-button (click)="openContact()" *ngIf="data.isLogin"><mat-icon>perm_contact_calendar</mat-icon>Contactos</a>
+    <a mat-button (click)="openContact()" *ngIf="!data.isLogin"><mat-icon>perm_contact_calendar</mat-icon>Soporte Técnico</a>
+    <a mat-button [routerLink]="'/admin'" *ngIf="data.isAdmin1" >Administrador</a>
+    <a mat-button [matMenuTriggerFor]="menu" *ngIf="data.isLogin" aria-label="Example icon-button with a menu">
+      <mat-icon style="color: #FFFF;">person</mat-icon>Cuenta
+    </a>
+    <mat-menu #menu="matMenu"  >
+      <button mat-menu-item  (click)='closedSesion()'>
+        <mat-icon style="color: #0077cb;">logout</mat-icon>
+        <span style="color: #0077cb;" >Cerrar Sesion</span>
+      </button>
+    </mat-menu>
+  </div>
+</ng-container>
+</mat-toolbar>
+<ng-template *ngIf="data.isAdmin1">
+<button mat-icon-button (click)="onToggleSidenav()">
+  <mat-icon>
+    menu
+  </mat-icon>
+</button>
+<span class="spacer"></span>
+</ng-template>

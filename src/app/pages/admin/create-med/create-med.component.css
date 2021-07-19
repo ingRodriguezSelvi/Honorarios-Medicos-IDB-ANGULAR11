@@ -1,0 +1,13 @@
+.full-width-input,button{
+  width: 40%;
+  margin: 0% 5%;
+}
+button{
+  color: #0077cb;
+  border: 1px #0077cb solid;
+  margin: 0.3rem;
+}
+.usercard{
+  box-shadow: 1.5px #000;
+  border: #0077cb 1px solid;
+}

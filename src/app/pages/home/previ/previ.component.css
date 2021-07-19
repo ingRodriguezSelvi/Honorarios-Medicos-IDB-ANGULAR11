@@ -1,0 +1,49 @@
+table {
+  width: 100.1%;
+  padding-bottom: 2rem;
+  height: auto;
+  text-align: center;
+}
+th{
+  background: #0077cb;
+  color: #ffff;
+  font-size: 1rem;
+  text-align: center;
+}
+td{
+  text-align: left;
+  font-size: 1rem;
+  margin: 0;
+  text-align: center;
+}
+.monto{
+  font-weight: 600;
+  color: #0077cb;
+  text-align: right;
+}
+.btn{
+  background: #0077cb;
+  color: #ffff;
+  display:flex ;
+  margin-bottom: 1vh;
+}
+mat-form-field{
+  width: 12%;
+  padding: 1.5%;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 0;
+  height: auto;
+  font-size: medium;
+}
+.mat-raised-button{
+  background: #e2e3e5;
+  color: #41464b;
+  font-weight: 400;
+  padding: 0.3rem;
+  border-radius: 4px;
+  margin-left: 5%;
+  width: 200px;
+  height: 50px;
+  font-size: larger;
+}

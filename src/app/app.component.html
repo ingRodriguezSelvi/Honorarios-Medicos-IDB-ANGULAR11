@@ -1,0 +1,15 @@
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (toggleSidenav)="sidenav.toggle()" ></app-header>
+    <ngx-ui-loader></ngx-ui-loader>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

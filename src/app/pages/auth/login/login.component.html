@@ -1,0 +1,40 @@
+<div class="heigth">
+  <div class="login-form">
+    <mat-card *ngIf="!isCortesia" class="card-login">
+      <mat-card-content >
+        <div class="container" >
+            <h1>Portal de Médicos IDB</h1>
+            <div *ngIf='isLoadding' class="loadding">
+            <img src="https://idbclinicas.com/wp-content/uploads/2017/09/loader.gif" alt="50px" width="250px">
+          </div>
+          <div >
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()"*ngIf='!isLoadding'>
+              <mat-form-field class="full-width-input">
+                <input matInput required   placeholder="Usuario" type="text"
+                formControlName="cedula" >
+              </mat-form-field>
+              <mat-form-field class="full-width-input separator">
+                <input matInput required  placeholder="Contraseña" type="password"
+                formControlName="password" >
+              </mat-form-field >
+              <button type="submit" mat-raised-button class="backgorundButton" [disabled]="loginForm.invalid" >Ingresar</button>
+            </form>
+            <div *ngIf='!isLoadding'>
+              <br>
+              <a (click)="openModal()" style="cursor: pointer; color: #013476;">¿Olvido su contraseña?</a>
+            </div>
+            <div class="alert alert-secondary" style="margin-top: 1.5rem;text-align: left;" *ngIf="errorStatus && !isLoadding" >
+              <p style="text-align: center;">{{msj}}
+              </p>
+            </div>
+            <div class="alert alert-secondary" style="margin-top: 1.5rem;text-align: left;" *ngIf="data.isErr && !isLoadding" >
+              <p style="text-align: center;">{{data.msjErr}}</p>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+  </div>
+<div>
+

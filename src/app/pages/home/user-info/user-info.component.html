@@ -1,0 +1,45 @@
+<div class="user-info">
+
+  <div class="layaout" *ngIf="!data.isMobile" >
+    <div class="card"*ngFor="let promotion of promotions">
+      <img src={{promotion.imageUrl}}/>
+      <div class="card-body">
+        <h5 class="card-title">{{promotion.title}}</h5>
+        <p class="card-text" style="display:block;text-overflow: ellipsis;width: 300px;overflow: hidden; white-space: nowrap;text-align: center;" [innerHTML]="promotion.content">
+
+        </p>
+        <a (click)="getDetailNews(promotion.id)" style="color: #0077cb;cursor: pointer; text-align: center;" >Leer más</a>
+      </div>
+    </div>
+
+    <!----->
+
+    <!----->
+  </div>
+  <mat-card class="card-user-info" >
+  <div class="row g-0" *ngIf="!data.isMobile">
+    <div class="col-md-7">
+      <div> <a>{{sexo}} {{medico.nombres}} {{medico.apellidos}} </a> </div>
+      <div> <a>Cédula: {{medico.rif}}</a></div>
+      <div> <a >Fecha: {{date|date:'dd/MM/YYYY'}}</a> </div>
+    </div>
+    <div class="col-md-4 ">
+      <h3 >Estado de Cuenta</h3>
+      <h5 style="text-align: center;">Cobro en Nombre de Médicos</h5>
+    </div>
+  </div>
+  <div class="row g-0" *ngIf="data.isMobile">
+    <div class="col-md-4 ">
+      <h3>Estado de Cuenta</h3>
+      <h5>Cobro en Nombre de Médicos</h5>
+      <br>
+    </div>
+    <div class="col-md-7">
+      <div> <a>{{sexo}} {{medico.nombres}} {{medico.apellidos}} </a> </div>
+      <div> <a>Cédula: {{medico.rif}}</a></div>
+      <div> <a >Fecha: {{date|date:'dd/MM/YYYY'}}</a> </div>
+    </div>
+  </div>
+
+  </mat-card>
+</div>

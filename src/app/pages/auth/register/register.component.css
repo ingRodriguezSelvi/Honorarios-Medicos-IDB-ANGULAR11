@@ -1,0 +1,33 @@
+.full-width-input,button{
+  width: 50%;
+}
+.mat-card{
+  width: auto;
+  max-width: 600px;
+  margin: 2.5rem auto;
+  text-align: center;
+  opacity: 0.95;
+  padding-top: 1rem;
+
+}
+.backgroundButton{
+background-color:#0077cb;;
+  color: #fff;
+  margin-top: 1.5rem;
+  margin-bottom: 0%;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+h1{
+  color: #0077cb;;
+}
+.heigth{
+  height: 100%;
+  background: url("https://idbclinicas.com/wp-content/uploads/2017/09/fondo-scaled.jpg")  no-repeat center center fixed;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+

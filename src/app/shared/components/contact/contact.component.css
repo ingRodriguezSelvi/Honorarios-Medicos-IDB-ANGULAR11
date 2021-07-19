@@ -1,0 +1,52 @@
+/* table {
+  width: 100.1%;
+  padding-bottom: 2rem;
+  height: auto;
+}*/
+th{
+  background: #0077cb;
+  color: #ffff;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0 5rem;
+  vertical-align:middle;
+  
+}
+td{
+  text-align:center;
+  font-size: 1rem;
+  margin:0 5rem;
+  vertical-align:middle;
+}
+tr{
+  margin:0 5rem;
+  vertical-align:middle;
+} 
+
+
+mat-card {
+  width: 100%;
+}
+
+
+
+.close-button{
+  position: relative!important;
+  float: right;
+  top:0;
+  right:0;
+}
+
+
+.full-width-table {
+  width: 100%;
+}
+
+mat-icon{
+  color:#0077cb;
+  vertical-align: middle;
+}
+h1{
+  text-align: center;
+}

@@ -1,0 +1,15 @@
+<div class="container" style="max-width: 750px;">
+  <h2 mat-dialog-title style="text-align: center;">{{promotion.title}}</h2>
+<mat-dialog-content class="mat-typography">
+<div class="container">
+  <div class="row g-0">
+    <div class="col-12" style="padding-left:2rem;" id="div1" [innerHTML]="sanitizer.bypassSecurityTrustHtml(promotion.content)">
+    </div>
+  </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>volver</button>
+</mat-dialog-actions>
+</div>
+

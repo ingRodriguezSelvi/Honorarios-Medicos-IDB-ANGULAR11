@@ -1,0 +1,133 @@
+
+<div class="grid-container" *ngIf="!data.isMobile">
+  <mat-grid-list cols="2" rowHeight="250px">
+    <mat-grid-tile colspan="2" rowspan="1">
+      <mat-icon id="close-icon" class="close-button"   [mat-dialog-close]="true" >close</mat-icon>
+      <div *ngIf="data.isLogin">
+        <strong><h1>Pagos</h1></strong>
+        <div class="table-responsive">
+          <table class="table full-width-table">
+            <thead>
+              <th>Sucursal</th>
+              <th>Responsable</th>
+              <th>Teléfono</th>
+              <th>Correo electrónico</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Clínica IDB Barquisimeto <br />
+                  Clínica IDB San Felipe <br />
+                  Previmédica IDB
+                </td>
+                <td>Astrid Caripaz</td>
+                <td>
+                  <mat-icon>support_agent</mat-icon>
+                  0251-2542578
+                  <br /><b>ext:</b> 1445
+                </td>
+                <td>
+                  <mat-icon>mail</mat-icon>
+                  pagos3@clinicaidb.com.ve
+                </td>
+              </tr>
+              <tr>
+                <td>Clínica IDB Cabudare</td>
+                <td>Damary Álvarez</td>
+                <td>
+                  <mat-icon>support_agent</mat-icon>
+                  0251-3356000
+                  <br /><b>ext:</b> 1102
+                </td>
+                <td>
+                  <mat-icon>mail</mat-icon>
+                  pagos4@clinicaimd.com.ve
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+     <strong> <h1>Soporte Técnico</h1></strong>
+      <div class="table-responsive" >
+        <table class="table full-width-table">
+          <thead>
+            <th>Teléfono</th>
+            <th>Correo electrónico</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <mat-icon>support_agent</mat-icon>  0251-3356000
+                <br /> <b>ext:</b> 1101
+              </td>
+              <td>
+                <mat-icon>mail</mat-icon>  soporte@clinicaimd.com.ve
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <div class="row" style="width: 100%;" *ngIf="data.isMobile">
+  <table class="table">
+    <thead>
+      <th>Departamento</th>
+      <th>Pagos</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sucursal</td>
+        <td> Clínica IDB Barquisimeto <br />
+          Clínica IDB San Felipe <br />
+          Previmédica IDB</td>
+      </tr>
+      <tr>
+        <td>Responsable</td>
+        <td>Astrid Caripaz</td>
+      </tr>
+      <tr>
+        <td>Teléfono</td>
+        <td>0251-2542578
+          <br /><b>ext:</b> 1445</td>
+      </tr>
+      <tr>
+        <td>Correo electrónico</td>
+        <td>pagos3 <br> @clinicaidb.com.ve</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table">
+    <thead>
+      <th>Departamento</th>
+      <th>Pagos</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sucursal</td>
+        <td> Clínica IDB Cabudare</td>
+      </tr>
+      <tr>
+        <td>Responsable</td>
+        <td>Damary Álvarez</td>
+      </tr>
+      <tr>
+        <td>Teléfono</td>
+        <td>0251-3356000
+          <br /><b>ext:</b> 1102</td>
+      </tr>
+      <tr>
+        <td>Correo electrónico</td>
+        <td>soporte <br> @clinicaimd.com.ve</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

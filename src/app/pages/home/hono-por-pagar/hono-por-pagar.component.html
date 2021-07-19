@@ -1,0 +1,115 @@
+<div *ngIf="!data.isMobile">
+  <mat-form-field>
+    <mat-label>{{mesView}}</mat-label>
+    <mat-select [(value)]="mesActual" #fecha (selectionChange)="aplyFilterDate(data.anno,fecha.value,tiposedes!)">
+      <mat-option *ngFor="let mes of data.MesesView" value={{mes.id}}>{{mes.nombre}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+   <div *ngIf='isLoadding' class="loadding">
+    <img src="https://idbclinicas.com/wp-content/uploads/2017/09/loader.gif" alt="">
+  </div>
+  <button mat-raised-button (click)="downloadPDF()" *ngIf="flag"><mat-icon>print</mat-icon>Descargar</button>
+  <div id="htmlDataXpagar">
+    <table mat-table [dataSource]="dataSource" *ngIf="flag && data.sede!=4 && !isLoadding" >
+    <ng-container matColumnDef="numero">
+      <th mat-header-cell *matHeaderCellDef> Número de Factura </th>
+      <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+      <td mat-footer-cell *matFooterCellDef>  </td>
+    </ng-container>
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{element.fecha|date:'dd/MM/YYYY'}}</td>
+      <td mat-footer-cell *matFooterCellDef>  </td>
+    </ng-container>
+    <ng-container matColumnDef="paciente">
+      <th mat-header-cell *matHeaderCellDef class="font-center"> Paciente  </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      <td mat-footer-cell *matFooterCellDef>  </td>
+    </ng-container>
+    <ng-container matColumnDef="montoBs">
+      <th mat-header-cell *matHeaderCellDef class="alin-regth"> Monto Bs * </th>
+      <td mat-cell *matCellDef="let element" class="alin-regth monto"> {{element.montoBs|number:'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef style="background: #0077cb; color: #fff; font-weight: 500;height: 10px;">Total Bs *</td>
+    </ng-container>
+    <ng-container matColumnDef="montoDol">
+      <th mat-header-cell *matHeaderCellDef class="alin-regth"> Monto USD * </th>
+      <td mat-cell *matCellDef="let element" class="alin-regth monto" style="width: 12%;"> {{element.montoDol|number:'1.2'}} </td>
+      <td mat-footer-cell *matFooterCellDef style="background: #0077cb; color: #fff; font-weight: 500;height: 10px;">Total USD *</td>
+    </ng-container>
+    <ng-container matColumnDef="1">
+      <td mat-footer-cell *matFooterCellDef >
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="2">
+      <td mat-footer-cell *matFooterCellDef >
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="3">
+      <td mat-footer-cell *matFooterCellDef >
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="4">
+      <td mat-footer-cell *matFooterCellDef class="alin-regth monto"style="width: 10%;">{{totalBs|number:'1.2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="5">
+      <td mat-footer-cell *matFooterCellDef class="alin-regth monto"style="width: 10%;">{{totalUsd|number:'1.2'}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="['1', '2','3','4','5']"></tr>
+  </table>
+  <div class="container" *ngIf='!isLoadding'>
+    <div class="alert alert-secondary" style="margin-top: 1.5rem;text-align: left;" *ngIf="!flag && !data.isPrevimedica" >
+      <p style="text-align: center;font-size: medium;">{{msjx}}
+      </p>
+    </div>
+    <div class="alert alert-secondary" style="margin-top: 1.5rem;text-align: left; font-size: medium;" *ngIf="flag && data.sede!=4">
+      <p style="text-align: center;">*Montos brutos sin retenciones de ley y administrativas. Para su preguntas quedamos a la orden en el departamento de pagos. Trabajamos por su bienestar.
+      </p>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="row" *ngIf="data.isMobile">
+  <div class="col-12">
+    <mat-form-field style="width: 100%;">
+      <mat-label>{{mesView}}</mat-label>
+      <mat-select [(value)]="mesActual" #fecha (selectionChange)="aplyFilterDate(data.anno,fecha.value,tiposedes!)">
+        <mat-option *ngFor="let mes of data.MesesView" value={{mes.id}}>{{mes.nombre}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+     <div *ngIf='isLoadding' class="loadding">
+      <img src="https://idbclinicas.com/wp-content/uploads/2017/09/loader.gif" alt="">
+    </div>
+    <table class="table" *ngFor="let honoForpayment of odersForPayments">
+      <thead>
+        <th>Factura</th>
+        <th>{{honoForpayment.numero}}</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="scop">Fecha:</td>
+          <td>{{honoForpayment.fecha|date:'dd/MM/YYYY'}}</td>
+        </tr>
+        <tr>
+          <td class="scop">Paciente:</td>
+          <td>{{honoForpayment.nombre}}</td>
+        </tr>
+        <tr>
+          <td class="scop">Monto Bs:</td>
+          <td class="monto">{{honoForpayment.montoBs|number:'1.2-2'}}</td>
+        </tr>
+        <tr>
+          <td class="scop">Monto USD:</td>
+          <td class="monto">{{honoForpayment.montoDol|number:'1.2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="alert alert-secondary" style="margin-top: 1.5rem;text-align: left;" *ngIf="!flag && !data.isPrevimedica" >
+      <p style="text-align: center;font-size: medium;">{{msjx}}
+      </p>
+    </div>
+  </div>
+</div>
+
